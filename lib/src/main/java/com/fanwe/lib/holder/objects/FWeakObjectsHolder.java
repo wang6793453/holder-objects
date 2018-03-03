@@ -12,7 +12,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * @param <T>
  */
-public class FWeakObjectsHolder<T> implements FIObjectsHolder<T>
+public class FWeakObjectsHolder<T> implements FObjectsHolder<T>
 {
     private final List<WeakReference<T>> mListObject = new CopyOnWriteArrayList<>();
     private final ReferenceQueue<T> mQueue = new ReferenceQueue<>();
@@ -74,6 +74,13 @@ public class FWeakObjectsHolder<T> implements FIObjectsHolder<T>
     {
         releaseWeakReferenceIfNeed();
         return mListObject.size();
+    }
+
+    @Override
+    public void clear()
+    {
+        releaseWeakReferenceIfNeed();
+        mListObject.clear();
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.fanwe.lib.holder.objects;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -9,7 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * @param <T>
  */
-public class FStrongObjectsHolder<T> implements FIObjectsHolder<T>
+public class FStrongObjectsHolder<T> implements FObjectsHolder<T>
 {
     private final List<T> mListObject = new CopyOnWriteArrayList<>();
 
@@ -44,6 +43,12 @@ public class FStrongObjectsHolder<T> implements FIObjectsHolder<T>
     }
 
     @Override
+    public synchronized void clear()
+    {
+        mListObject.clear();
+    }
+
+    @Override
     public synchronized void foreach(IterateCallback<T> callback)
     {
         if (callback == null)
@@ -69,7 +74,7 @@ public class FStrongObjectsHolder<T> implements FIObjectsHolder<T>
             return;
         }
 
-        final List<T> list = new ArrayList<>(mListObject);
+        final List<T> list = mListObject;
 
         final int size = list.size();
         for (int i = size - 1; i >= 0; i--)

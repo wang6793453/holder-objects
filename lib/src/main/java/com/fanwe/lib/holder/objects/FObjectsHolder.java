@@ -5,7 +5,7 @@ package com.fanwe.lib.holder.objects;
  *
  * @param <T>
  */
-public interface FIObjectsHolder<T>
+public interface FObjectsHolder<T>
 {
     /**
      * 添加对象
@@ -37,6 +37,11 @@ public interface FIObjectsHolder<T>
      * @return
      */
     int size();
+
+    /**
+     * 清空
+     */
+    void clear();
 
     /**
      * 遍历
