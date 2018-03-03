@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         doFill();
+        doForeach();
     }
 
     private void doFill()
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void next(String item)
             {
-
+//                Log.i(TAG, item);
             }
         });
     }
