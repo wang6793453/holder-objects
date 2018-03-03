@@ -55,7 +55,17 @@ public interface FObjectsHolder<T>
      */
     void clear();
 
+    /**
+     * 转为List返回
+     *
+     * @return
+     */
     List<T> toList();
 
+    /**
+     * 返回遍历器
+     *
+     * @return
+     */
     FIterator<T> getIterator();
 }
