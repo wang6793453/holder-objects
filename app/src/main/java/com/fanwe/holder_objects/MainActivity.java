@@ -8,6 +8,7 @@ import android.view.View;
 import com.fanwe.lib.holder.objects.FObjectsHolder;
 import com.fanwe.lib.holder.objects.FStrongObjectsHolder;
 import com.fanwe.lib.holder.objects.IterateCallback;
+import com.fanwe.lib.holder.objects.iterator.FIterator;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -36,7 +37,8 @@ public class MainActivity extends AppCompatActivity
         });
 
         doFill();
-        doForeach();
+        doNext();
+        doPrevious();
     }
 
     private void doFill()
@@ -58,5 +60,25 @@ public class MainActivity extends AppCompatActivity
 //                Log.i(TAG, item);
             }
         });
+    }
+
+    private void doNext()
+    {
+        FIterator<String> it = mObjectsHolder.getIterator().prepareNext();
+        while (it.hasNext())
+        {
+            String item = it.next();
+//            Log.i(TAG, item);
+        }
+    }
+
+    private void doPrevious()
+    {
+        FIterator<String> it = mObjectsHolder.getIterator().preparePrevious();
+        while (it.hasPrevious())
+        {
+            String item = it.previous();
+//            Log.i(TAG, item);
+        }
     }
 }

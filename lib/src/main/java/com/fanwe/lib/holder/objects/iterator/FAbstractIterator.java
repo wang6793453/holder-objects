@@ -8,50 +8,52 @@ public abstract class FAbstractIterator<T> implements FIterator<T>
     private int mIndex;
 
     @Override
-    public synchronized void prepareNext()
+    public FIterator<T> prepareNext()
     {
         mIndex = -1;
+        return this;
     }
 
     @Override
-    public synchronized boolean hasNext()
+    public boolean hasNext()
     {
         final int index = mIndex + 1;
         return index >= 0 && index < size();
     }
 
     @Override
-    public synchronized T next()
+    public T next()
     {
         mIndex++;
         return get(mIndex);
     }
 
     @Override
-    public synchronized void preparePrevious()
+    public FIterator<T> preparePrevious()
     {
         mIndex = size();
+        return this;
     }
 
     @Override
-    public synchronized boolean hasPrevious()
+    public boolean hasPrevious()
     {
         final int index = mIndex - 1;
         return index >= 0 && index < size();
     }
 
     @Override
-    public synchronized T previous()
+    public T previous()
     {
         mIndex--;
         return get(mIndex);
     }
 
     @Override
-    public synchronized void remove()
+    public void remove()
     {
         final T object = get(mIndex);
-       remove(object);
+        remove(object);
     }
 
     protected abstract T get(int index);

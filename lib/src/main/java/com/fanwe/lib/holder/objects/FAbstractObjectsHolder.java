@@ -11,7 +11,7 @@ public abstract class FAbstractObjectsHolder<T> implements FObjectsHolder<T>
     private FIterator<T> mIterator;
 
     @Override
-    public synchronized FIterator<T> iterator()
+    public FIterator<T> getIterator()
     {
         if (mIterator == null)
         {

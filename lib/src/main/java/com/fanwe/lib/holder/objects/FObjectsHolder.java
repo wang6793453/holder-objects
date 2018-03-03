@@ -53,7 +53,7 @@ public interface FObjectsHolder<T>
      */
     void clear();
 
-    FIterator<T> iterator();
+    FIterator<T> getIterator();
 
     /**
      * 遍历

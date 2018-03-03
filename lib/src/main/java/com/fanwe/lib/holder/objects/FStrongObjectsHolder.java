@@ -1,8 +1,5 @@
 package com.fanwe.lib.holder.objects;
 
-import com.fanwe.lib.holder.objects.iterator.FIterator;
-import com.fanwe.lib.holder.objects.iterator.FObjectsHolderIterator;
-
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -16,7 +13,7 @@ public class FStrongObjectsHolder<T> extends FAbstractObjectsHolder<T>
     private final List<T> mListObject = new CopyOnWriteArrayList<>();
 
     @Override
-    public synchronized boolean add(T object)
+    public boolean add(T object)
     {
         if (object == null || contains(object))
         {
@@ -28,13 +25,13 @@ public class FStrongObjectsHolder<T> extends FAbstractObjectsHolder<T>
     }
 
     @Override
-    public synchronized boolean remove(Object object)
+    public boolean remove(Object object)
     {
         return mListObject.remove(object);
     }
 
     @Override
-    public synchronized T get(int index)
+    public T get(int index)
     {
         if (index >= 0 && index < size())
         {
@@ -46,19 +43,19 @@ public class FStrongObjectsHolder<T> extends FAbstractObjectsHolder<T>
     }
 
     @Override
-    public synchronized boolean contains(T object)
+    public boolean contains(T object)
     {
         return mListObject.contains(object);
     }
 
     @Override
-    public synchronized int size()
+    public int size()
     {
         return mListObject.size();
     }
 
     @Override
-    public synchronized void clear()
+    public void clear()
     {
         mListObject.clear();
     }

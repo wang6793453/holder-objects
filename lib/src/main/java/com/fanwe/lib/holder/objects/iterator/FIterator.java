@@ -8,7 +8,7 @@ public interface FIterator<T>
     /**
      * 准备正序遍历
      */
-    void prepareNext();
+    FIterator<T> prepareNext();
 
     boolean hasNext();
 
@@ -17,7 +17,7 @@ public interface FIterator<T>
     /**
      * 准备倒序遍历
      */
-    void preparePrevious();
+    FIterator<T> preparePrevious();
 
     boolean hasPrevious();
 
