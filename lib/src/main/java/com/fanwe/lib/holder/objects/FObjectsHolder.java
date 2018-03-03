@@ -1,5 +1,7 @@
 package com.fanwe.lib.holder.objects;
 
+import com.fanwe.lib.holder.objects.iterator.FIterator;
+
 /**
  * 对象holder
  *
@@ -24,6 +26,14 @@ public interface FObjectsHolder<T>
     boolean remove(Object object);
 
     /**
+     * 返回第几个对象
+     *
+     * @param index
+     * @return
+     */
+    T get(int index);
+
+    /**
      * 是否包含某个对象
      *
      * @param object
@@ -42,6 +52,8 @@ public interface FObjectsHolder<T>
      * 清空
      */
     void clear();
+
+    FIterator<T> iterator();
 
     /**
      * 遍历

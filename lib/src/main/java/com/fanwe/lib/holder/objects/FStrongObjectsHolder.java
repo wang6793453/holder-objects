@@ -1,5 +1,8 @@
 package com.fanwe.lib.holder.objects;
 
+import com.fanwe.lib.holder.objects.iterator.FIterator;
+import com.fanwe.lib.holder.objects.iterator.FObjectsHolderIterator;
+
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -8,7 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * @param <T>
  */
-public class FStrongObjectsHolder<T> implements FObjectsHolder<T>
+public class FStrongObjectsHolder<T> extends FAbstractObjectsHolder<T>
 {
     private final List<T> mListObject = new CopyOnWriteArrayList<>();
 
@@ -28,6 +31,18 @@ public class FStrongObjectsHolder<T> implements FObjectsHolder<T>
     public synchronized boolean remove(Object object)
     {
         return mListObject.remove(object);
+    }
+
+    @Override
+    public synchronized T get(int index)
+    {
+        if (index >= 0 && index < size())
+        {
+            return mListObject.get(index);
+        } else
+        {
+            return null;
+        }
     }
 
     @Override
