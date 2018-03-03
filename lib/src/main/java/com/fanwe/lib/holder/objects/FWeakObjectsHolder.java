@@ -3,7 +3,7 @@ package com.fanwe.lib.holder.objects;
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -18,7 +18,7 @@ public class FWeakObjectsHolder<T> extends FAbstractObjectsHolder<T>
     private final ReferenceQueue<T> mQueue = new ReferenceQueue<>();
 
     @Override
-    public synchronized boolean add(T object)
+    public boolean add(T object)
     {
         if (object == null || contains(object))
         {
@@ -31,7 +31,7 @@ public class FWeakObjectsHolder<T> extends FAbstractObjectsHolder<T>
     }
 
     @Override
-    public synchronized boolean remove(Object object)
+    public boolean remove(Object object)
     {
         if (object == null)
         {
@@ -64,7 +64,7 @@ public class FWeakObjectsHolder<T> extends FAbstractObjectsHolder<T>
     }
 
     @Override
-    public synchronized boolean contains(T object)
+    public boolean contains(T object)
     {
         if (object == null)
         {
@@ -83,7 +83,7 @@ public class FWeakObjectsHolder<T> extends FAbstractObjectsHolder<T>
     }
 
     @Override
-    public synchronized int size()
+    public int size()
     {
         releaseWeakReferenceIfNeed();
         return mListObject.size();
@@ -97,35 +97,16 @@ public class FWeakObjectsHolder<T> extends FAbstractObjectsHolder<T>
     }
 
     @Override
-    public synchronized void foreach(IterateCallback<T> callback)
+    public List<T> toList()
     {
-        if (callback == null)
-        {
-            return;
-        }
-
         releaseWeakReferenceIfNeed();
+
+        List<T> list = new ArrayList<>();
         for (WeakReference<T> item : mListObject)
         {
-            callback.next(item.get());
-            if (callback.isBreakForeach())
-            {
-                break;
-            }
+            list.add(item.get());
         }
-    }
-
-    @Override
-    public synchronized void foreachReverse(IterateCallback<T> callback)
-    {
-        if (callback == null)
-        {
-            return;
-        }
-
-        Collections.reverse(mListObject);
-        foreach(callback);
-        Collections.reverse(mListObject);
+        return list;
     }
 
     private void releaseWeakReferenceIfNeed()

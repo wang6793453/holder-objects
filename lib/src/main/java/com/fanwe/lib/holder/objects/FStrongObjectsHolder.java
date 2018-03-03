@@ -61,41 +61,8 @@ public class FStrongObjectsHolder<T> extends FAbstractObjectsHolder<T>
     }
 
     @Override
-    public synchronized void foreach(IterateCallback<T> callback)
+    public List<T> toList()
     {
-        if (callback == null)
-        {
-            return;
-        }
-
-        for (T item : mListObject)
-        {
-            callback.next(item);
-            if (callback.isBreakForeach())
-            {
-                break;
-            }
-        }
-    }
-
-    @Override
-    public synchronized void foreachReverse(IterateCallback<T> callback)
-    {
-        if (callback == null)
-        {
-            return;
-        }
-
-        final List<T> list = mListObject;
-
-        final int size = list.size();
-        for (int i = size - 1; i >= 0; i--)
-        {
-            callback.next(list.get(i));
-            if (callback.isBreakForeach())
-            {
-                break;
-            }
-        }
+        return mListObject;
     }
 }

@@ -2,6 +2,8 @@ package com.fanwe.lib.holder.objects;
 
 import com.fanwe.lib.holder.objects.iterator.FIterator;
 
+import java.util.List;
+
 /**
  * 对象holder
  *
@@ -53,19 +55,7 @@ public interface FObjectsHolder<T>
      */
     void clear();
 
+    List<T> toList();
+
     FIterator<T> getIterator();
-
-    /**
-     * 遍历
-     *
-     * @param callback
-     */
-    void foreach(IterateCallback<T> callback);
-
-    /**
-     * 倒序遍历
-     *
-     * @param callback
-     */
-    void foreachReverse(IterateCallback<T> callback);
 }
