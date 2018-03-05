@@ -1,6 +1,7 @@
 package com.fanwe.lib.holder.objects;
 
 import java.util.List;
+import java.util.ListIterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -31,18 +32,6 @@ public class FStrongObjectsHolder<T> implements FObjectsHolder<T>
     }
 
     @Override
-    public T get(int index)
-    {
-        if (index >= 0 && index < size())
-        {
-            return mListObject.get(index);
-        } else
-        {
-            return null;
-        }
-    }
-
-    @Override
     public boolean contains(T object)
     {
         return mListObject.contains(object);
@@ -61,8 +50,39 @@ public class FStrongObjectsHolder<T> implements FObjectsHolder<T>
     }
 
     @Override
-    public List<T> toList()
+    public void foreach(ForeachCallback<T> callback)
     {
-        return mListObject;
+        if (callback == null)
+        {
+            return;
+        }
+
+        for (T item : mListObject)
+        {
+            callback.next(item);
+            if (callback.isBreakForeach())
+            {
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void foreachReverse(ForeachCallback<T> callback)
+    {
+        if (callback == null)
+        {
+            return;
+        }
+
+        ListIterator<T> it = mListObject.listIterator(mListObject.size());
+        while (it.hasPrevious())
+        {
+            callback.next(it.previous());
+            if (callback.isBreakForeach())
+            {
+                break;
+            }
+        }
     }
 }

@@ -1,7 +1,5 @@
 package com.fanwe.lib.holder.objects;
 
-import java.util.List;
-
 /**
  * 对象holder
  *
@@ -26,14 +24,6 @@ public interface FObjectsHolder<T>
     boolean remove(Object object);
 
     /**
-     * 返回第几个对象
-     *
-     * @param index
-     * @return
-     */
-    T get(int index);
-
-    /**
      * 是否包含某个对象
      *
      * @param object
@@ -54,9 +44,16 @@ public interface FObjectsHolder<T>
     void clear();
 
     /**
-     * 转为List返回
+     * 正序遍历
      *
-     * @return
+     * @param callback
      */
-    List<T> toList();
+    void foreach(ForeachCallback<T> callback);
+
+    /**
+     * 倒序遍历
+     *
+     * @param callback
+     */
+    void foreachReverse(ForeachCallback<T> callback);
 }

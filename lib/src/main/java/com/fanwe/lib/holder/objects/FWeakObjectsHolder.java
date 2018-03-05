@@ -3,8 +3,8 @@ package com.fanwe.lib.holder.objects;
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -51,19 +51,6 @@ public class FWeakObjectsHolder<T> implements FObjectsHolder<T>
     }
 
     @Override
-    public T get(int index)
-    {
-        releaseWeakReferenceIfNeed();
-        if (index >= 0 && index < size())
-        {
-            return mListObject.get(index).get();
-        } else
-        {
-            return null;
-        }
-    }
-
-    @Override
     public boolean contains(T object)
     {
         if (object == null)
@@ -97,16 +84,42 @@ public class FWeakObjectsHolder<T> implements FObjectsHolder<T>
     }
 
     @Override
-    public List<T> toList()
+    public void foreach(ForeachCallback<T> callback)
     {
-        releaseWeakReferenceIfNeed();
+        if (callback == null)
+        {
+            return;
+        }
 
-        List<T> list = new ArrayList<>();
+        releaseWeakReferenceIfNeed();
         for (WeakReference<T> item : mListObject)
         {
-            list.add(item.get());
+            callback.next(item.get());
+            if (callback.isBreakForeach())
+            {
+                break;
+            }
         }
-        return list;
+    }
+
+    @Override
+    public void foreachReverse(ForeachCallback<T> callback)
+    {
+        if (callback == null)
+        {
+            return;
+        }
+
+        releaseWeakReferenceIfNeed();
+        ListIterator<WeakReference<T>> it = mListObject.listIterator(mListObject.size());
+        while (it.hasPrevious())
+        {
+            callback.next(it.previous().get());
+            if (callback.isBreakForeach())
+            {
+                break;
+            }
+        }
     }
 
     private void releaseWeakReferenceIfNeed()
