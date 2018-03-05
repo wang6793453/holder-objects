@@ -93,7 +93,6 @@ public class FWeakObjectsHolder<T> implements FObjectsHolder<T>
 
         releaseWeakReferenceIfNeed();
         final ListIterator<WeakReference<T>> it = mListObject.listIterator();
-        callback.mIterator = it;
         while (it.hasNext())
         {
             callback.next(it.next().get());
@@ -114,7 +113,6 @@ public class FWeakObjectsHolder<T> implements FObjectsHolder<T>
 
         releaseWeakReferenceIfNeed();
         final ListIterator<WeakReference<T>> it = mListObject.listIterator(mListObject.size());
-        callback.mIterator = it;
         while (it.hasPrevious())
         {
             callback.next(it.previous().get());
