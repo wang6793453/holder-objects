@@ -57,10 +57,9 @@ public class FStrongObjectsHolder<T> implements FObjectsHolder<T>
             return;
         }
 
-        final ListIterator<T> it = mListObject.listIterator();
-        while (it.hasNext())
+        for (T item : mListObject)
         {
-            callback.next(it.next());
+            callback.next(item);
             if (callback.isBreakForeach())
             {
                 break;
