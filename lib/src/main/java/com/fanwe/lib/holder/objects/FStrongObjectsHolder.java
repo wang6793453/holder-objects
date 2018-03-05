@@ -8,7 +8,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * @param <T>
  */
-public class FStrongObjectsHolder<T> extends FAbstractObjectsHolder<T>
+public class FStrongObjectsHolder<T> implements FObjectsHolder<T>
 {
     private final List<T> mListObject = new CopyOnWriteArrayList<>();
 

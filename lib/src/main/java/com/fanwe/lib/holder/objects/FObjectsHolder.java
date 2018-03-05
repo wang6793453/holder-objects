@@ -1,7 +1,5 @@
 package com.fanwe.lib.holder.objects;
 
-import com.fanwe.lib.holder.objects.iterator.FIterator;
-
 import java.util.List;
 
 /**
@@ -61,11 +59,4 @@ public interface FObjectsHolder<T>
      * @return
      */
     List<T> toList();
-
-    /**
-     * 返回遍历器
-     *
-     * @return
-     */
-    FIterator<T> getIterator();
 }

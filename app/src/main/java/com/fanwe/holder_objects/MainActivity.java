@@ -7,14 +7,16 @@ import android.view.View;
 
 import com.fanwe.lib.holder.objects.FObjectsHolder;
 import com.fanwe.lib.holder.objects.FStrongObjectsHolder;
-import com.fanwe.lib.holder.objects.IterateCallback;
-import com.fanwe.lib.holder.objects.iterator.FIterator;
+import com.fanwe.lib.iterator.FIterator;
+import com.fanwe.lib.iterator.FListIterator;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
 {
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    private FObjectsHolder<String> mObjectsHolder = new FStrongObjectsHolder<>();
+    private FObjectsHolder<View> mHolder = new FStrongObjectsHolder<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -30,55 +32,65 @@ public class MainActivity extends AppCompatActivity
                 long start = System.currentTimeMillis();
                 for (int i = 0; i < 10000; i++)
                 {
-                    doForeach();
+                    doForeach(false);
                 }
                 Log.e(TAG, "time:" + (System.currentTimeMillis() - start));
             }
         });
 
-        doFill();
-        doNext();
-        doPrevious();
+        fillData();
+        doNext(true);
+        doPrevious(true);
     }
 
-    private void doFill()
+    private void fillData()
     {
-        mObjectsHolder.clear();
+        mHolder.clear();
         for (int i = 0; i < 20; i++)
         {
-            mObjectsHolder.add(String.valueOf(i));
+            View view = new View(this);
+            view.setTag(i);
+            mHolder.add(view);
         }
     }
 
-    private void doForeach()
+    private void doForeach(boolean log)
     {
-        mObjectsHolder.foreachReverse(new IterateCallback<String>()
+        List<View> list = mHolder.toList();
+        for (View item : list)
         {
-            @Override
-            public void next(String item)
+            if (log)
             {
-//                Log.i(TAG, item);
+                Log.i(TAG, String.valueOf(item.getTag()));
             }
-        });
+        }
     }
 
-    private void doNext()
+    private void doNext(boolean log)
     {
-        FIterator<String> it = mObjectsHolder.getIterator().prepareNext();
+        FIterator<View> it = new FListIterator<>(mHolder.toList());
+        it.prepare(true);
         while (it.hasNext())
         {
-            String item = it.next();
-//            Log.i(TAG, item);
+            View item = it.next();
+            if (log)
+            {
+                Log.i(TAG, String.valueOf(item.getTag()));
+            }
         }
     }
 
-    private void doPrevious()
+    private void doPrevious(boolean log)
     {
-        FIterator<String> it = mObjectsHolder.getIterator().preparePrevious();
-        while (it.hasPrevious())
+        FIterator<View> it = new FListIterator<>(mHolder.toList());
+        it.prepare(false);
+        while (it.hasNext())
         {
-            String item = it.previous();
-//            Log.i(TAG, item);
+            View item = it.next();
+            if (log)
+            {
+                Log.i(TAG, String.valueOf(item.getTag()));
+            }
         }
     }
 }
