@@ -56,4 +56,11 @@ public interface FObjectsHolder<T>
      * @param callback
      */
     void foreachReverse(ForeachCallback<T> callback);
+
+    /**
+     * 返回保存的所有对象信息，常用来输出日志调试
+     *
+     * @return
+     */
+    String getObjectsString();
 }

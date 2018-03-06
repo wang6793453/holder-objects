@@ -3,6 +3,7 @@ package com.fanwe.lib.holder.objects;
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -120,6 +121,19 @@ public class FWeakObjectsHolder<T> extends FAbstractObjectsHolder<T>
                 break;
             }
         }
+    }
+
+    @Override
+    public String getObjectsString()
+    {
+        final List<T> list = new ArrayList<>();
+
+        releaseWeakReferenceIfNeed();
+        for (WeakReference<T> item : mListObject)
+        {
+            list.add(item.get());
+        }
+        return list.toString();
     }
 
     private void releaseWeakReferenceIfNeed()

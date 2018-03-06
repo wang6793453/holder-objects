@@ -5,14 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.fanwe.lib.holder.objects.FObjectsHolder;
-import com.fanwe.lib.holder.objects.FStrongObjectsHolder;
+import com.fanwe.lib.holder.objects.FWeakObjectsHolder;
 import com.fanwe.lib.holder.objects.ForeachCallback;
 
 public class MainActivity extends AppCompatActivity
 {
     public static final String TAG = MainActivity.class.getSimpleName();
 
-    private FObjectsHolder<Integer> mHolder = new FStrongObjectsHolder<>();
+    private FObjectsHolder<Integer> mHolder = new FWeakObjectsHolder<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)

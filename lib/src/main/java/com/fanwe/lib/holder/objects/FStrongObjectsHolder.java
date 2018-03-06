@@ -85,4 +85,10 @@ public class FStrongObjectsHolder<T> extends FAbstractObjectsHolder<T>
             }
         }
     }
+
+    @Override
+    public String getObjectsString()
+    {
+        return mListObject.toString();
+    }
 }
