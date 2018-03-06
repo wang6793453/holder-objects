@@ -45,6 +45,10 @@ public class MainActivity extends AppCompatActivity
             @Override
             protected void next(Integer item)
             {
+                if (item == 5)
+                {
+                    breakForeach(); //停止遍历
+                }
                 if (log)
                 {
                     Log.i(TAG, String.valueOf(item));
