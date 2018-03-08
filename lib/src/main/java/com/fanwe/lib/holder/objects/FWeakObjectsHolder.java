@@ -85,11 +85,11 @@ public class FWeakObjectsHolder<T> extends FAbstractObjectsHolder<T>
     }
 
     @Override
-    public void foreach(ForeachCallback<T> callback)
+    public Object foreach(ForeachCallback<T> callback)
     {
         if (callback == null)
         {
-            return;
+            return null;
         }
 
         releaseWeakReferenceIfNeed();
@@ -101,14 +101,15 @@ public class FWeakObjectsHolder<T> extends FAbstractObjectsHolder<T>
                 break;
             }
         }
+        return callback.getData();
     }
 
     @Override
-    public void foreachReverse(ForeachCallback<T> callback)
+    public Object foreachReverse(ForeachCallback<T> callback)
     {
         if (callback == null)
         {
-            return;
+            return null;
         }
 
         releaseWeakReferenceIfNeed();
@@ -121,6 +122,7 @@ public class FWeakObjectsHolder<T> extends FAbstractObjectsHolder<T>
                 break;
             }
         }
+        return callback.getData();
     }
 
     @Override

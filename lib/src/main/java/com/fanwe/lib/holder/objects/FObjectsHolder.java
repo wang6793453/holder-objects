@@ -47,15 +47,17 @@ public interface FObjectsHolder<T>
      * 正序遍历
      *
      * @param callback
+     * @return 返回callback中的data {@link ForeachCallback#getData()}
      */
-    void foreach(ForeachCallback<T> callback);
+    Object foreach(ForeachCallback<T> callback);
 
     /**
      * 倒序遍历
      *
      * @param callback
+     * @return 返回callback中的data {@link ForeachCallback#getData()}
      */
-    void foreachReverse(ForeachCallback<T> callback);
+    Object foreachReverse(ForeachCallback<T> callback);
 
     /**
      * 返回保存的所有对象信息，常用来输出日志调试

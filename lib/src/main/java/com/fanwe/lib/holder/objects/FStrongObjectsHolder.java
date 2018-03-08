@@ -50,11 +50,11 @@ public class FStrongObjectsHolder<T> extends FAbstractObjectsHolder<T>
     }
 
     @Override
-    public void foreach(ForeachCallback<T> callback)
+    public Object foreach(ForeachCallback<T> callback)
     {
         if (callback == null)
         {
-            return;
+            return null;
         }
 
         for (T item : mListObject)
@@ -65,14 +65,15 @@ public class FStrongObjectsHolder<T> extends FAbstractObjectsHolder<T>
                 break;
             }
         }
+        return callback.getData();
     }
 
     @Override
-    public void foreachReverse(ForeachCallback<T> callback)
+    public Object foreachReverse(ForeachCallback<T> callback)
     {
         if (callback == null)
         {
-            return;
+            return null;
         }
 
         final ListIterator<T> it = mListObject.listIterator(mListObject.size());
@@ -84,6 +85,7 @@ public class FStrongObjectsHolder<T> extends FAbstractObjectsHolder<T>
                 break;
             }
         }
+        return callback.getData();
     }
 
     @Override
