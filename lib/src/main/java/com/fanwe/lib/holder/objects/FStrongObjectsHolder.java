@@ -1,5 +1,6 @@
 package com.fanwe.lib.holder.objects;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -11,13 +12,18 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class FStrongObjectsHolder<T> implements ObjectsHolder<T>
 {
-    private final List<T> mListObject = new CopyOnWriteArrayList<>();
+    private final List<T> mListObject;
+
+    public FStrongObjectsHolder(List<T> list)
+    {
+        if (list == null) list = new CopyOnWriteArrayList<>();
+        mListObject = list;
+    }
 
     @Override
     public boolean add(T object)
     {
-        if (object == null || contains(object))
-            return false;
+        if (object == null || contains(object)) return false;
 
         mListObject.add(object);
         return true;
@@ -50,13 +56,18 @@ public class FStrongObjectsHolder<T> implements ObjectsHolder<T>
     @Override
     public Object foreach(ForeachCallback<T> callback)
     {
-        if (callback == null)
-            return null;
+        if (callback == null) return null;
 
-        for (T item : mListObject)
+        final Iterator<T> it = mListObject.iterator();
+        while (it.hasNext())
         {
-            if (callback.next(item))
-                break;
+            final boolean needBreak = callback.next(it.next());
+            if (callback.mRemove)
+            {
+                it.remove();
+                callback.mRemove = false;
+            }
+            if (needBreak) break;
         }
         return callback.getData();
     }
@@ -70,8 +81,13 @@ public class FStrongObjectsHolder<T> implements ObjectsHolder<T>
         final ListIterator<T> it = mListObject.listIterator(mListObject.size());
         while (it.hasPrevious())
         {
-            if (callback.next(it.previous()))
-                break;
+            final boolean needBreak = callback.next(it.previous());
+            if (callback.mRemove)
+            {
+                it.remove();
+                callback.mRemove = false;
+            }
+            if (needBreak) break;
         }
         return callback.getData();
     }

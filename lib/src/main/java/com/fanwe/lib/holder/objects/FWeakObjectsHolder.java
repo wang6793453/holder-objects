@@ -102,8 +102,7 @@ public class FWeakObjectsHolder<T> implements ObjectsHolder<T>
     @Override
     public Object foreachReverse(ForeachCallback<T> callback)
     {
-        if (callback == null)
-            return null;
+        if (callback == null) return null;
 
         releaseWeakReferenceIfNeed();
         final ListIterator<WeakReference<T>> it = mListObject.listIterator(mListObject.size());

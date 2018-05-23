@@ -16,12 +16,12 @@ public class MainActivity extends AppCompatActivity
     /**
      * 强引用
      */
-    private ObjectsHolder<View> mHolder = new FStrongObjectsHolder<>();
+    private ObjectsHolder<View> mHolder = new FStrongObjectsHolder<>(null);
 
     /**
      * 弱引用
      */
-//    private ObjectsHolder<View> mHolder = new FWeakObjectsHolder<>();
+//    private ObjectsHolder<View> mHolder = new FWeakObjectsHolder<>(null);
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity
                 Object data = null;
 
                 data = mHolder.foreach(mForeachCallback); // 正序遍历
+                Log.e(TAG, "--------------------");
                 data = mHolder.foreachReverse(mForeachCallback); // 倒序遍历
 
                 Log.e(TAG, "foreach result:" + data);
