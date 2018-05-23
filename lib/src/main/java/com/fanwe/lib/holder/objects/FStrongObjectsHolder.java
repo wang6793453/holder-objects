@@ -17,9 +17,7 @@ public class FStrongObjectsHolder<T> extends FAbstractObjectsHolder<T>
     public boolean add(T object)
     {
         if (object == null || contains(object))
-        {
             return false;
-        }
 
         mListObject.add(object);
         return true;
@@ -53,17 +51,13 @@ public class FStrongObjectsHolder<T> extends FAbstractObjectsHolder<T>
     public Object foreach(ForeachCallback<T> callback)
     {
         if (callback == null)
-        {
             return null;
-        }
 
         for (T item : mListObject)
         {
             callback.next(item);
             if (callback.isBreakForeach())
-            {
                 break;
-            }
         }
         return callback.getData();
     }
@@ -72,18 +66,14 @@ public class FStrongObjectsHolder<T> extends FAbstractObjectsHolder<T>
     public Object foreachReverse(ForeachCallback<T> callback)
     {
         if (callback == null)
-        {
             return null;
-        }
 
         final ListIterator<T> it = mListObject.listIterator(mListObject.size());
         while (it.hasPrevious())
         {
             callback.next(it.previous());
             if (callback.isBreakForeach())
-            {
                 break;
-            }
         }
         return callback.getData();
     }

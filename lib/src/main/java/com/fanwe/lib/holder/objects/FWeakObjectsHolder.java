@@ -22,12 +22,9 @@ public class FWeakObjectsHolder<T> extends FAbstractObjectsHolder<T>
     public boolean add(T object)
     {
         if (object == null || contains(object))
-        {
             return false;
-        }
 
-        WeakReference<T> reference = new WeakReference<>(object, mQueue);
-        mListObject.add(reference);
+        mListObject.add(new WeakReference<>(object, mQueue));
         return true;
     }
 
@@ -35,9 +32,7 @@ public class FWeakObjectsHolder<T> extends FAbstractObjectsHolder<T>
     public boolean remove(Object object)
     {
         if (object == null)
-        {
             return false;
-        }
 
         releaseWeakReferenceIfNeed();
         for (WeakReference<T> item : mListObject)
@@ -55,9 +50,7 @@ public class FWeakObjectsHolder<T> extends FAbstractObjectsHolder<T>
     public boolean contains(T object)
     {
         if (object == null)
-        {
             return false;
-        }
 
         releaseWeakReferenceIfNeed();
         for (WeakReference<T> item : mListObject)
@@ -88,18 +81,14 @@ public class FWeakObjectsHolder<T> extends FAbstractObjectsHolder<T>
     public Object foreach(ForeachCallback<T> callback)
     {
         if (callback == null)
-        {
             return null;
-        }
 
         releaseWeakReferenceIfNeed();
         for (WeakReference<T> item : mListObject)
         {
             callback.next(item.get());
             if (callback.isBreakForeach())
-            {
                 break;
-            }
         }
         return callback.getData();
     }
@@ -108,9 +97,7 @@ public class FWeakObjectsHolder<T> extends FAbstractObjectsHolder<T>
     public Object foreachReverse(ForeachCallback<T> callback)
     {
         if (callback == null)
-        {
             return null;
-        }
 
         releaseWeakReferenceIfNeed();
         final ListIterator<WeakReference<T>> it = mListObject.listIterator(mListObject.size());
@@ -118,9 +105,7 @@ public class FWeakObjectsHolder<T> extends FAbstractObjectsHolder<T>
         {
             callback.next(it.previous().get());
             if (callback.isBreakForeach())
-            {
                 break;
-            }
         }
         return callback.getData();
     }
@@ -142,14 +127,11 @@ public class FWeakObjectsHolder<T> extends FAbstractObjectsHolder<T>
     {
         while (true)
         {
-            Reference<? extends T> item = mQueue.poll();
+            final Reference<? extends T> item = mQueue.poll();
             if (item == null)
-            {
                 break;
-            } else
-            {
+            else
                 mListObject.remove(item);
-            }
         }
     }
 }
