@@ -4,7 +4,6 @@ import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -40,16 +39,14 @@ public class FWeakObjectsHolder<T> implements ObjectsHolder<T>
         if (object == null) return false;
 
         releaseWeakReferenceIfNeed();
-        final Iterator<WeakReference<T>> it = mListObject.iterator();
-        while (it.hasNext())
+        int index = -1;
+        for (WeakReference<T> item : mListObject)
         {
-            if (object.equals(it.next().get()))
-            {
-                it.remove();
-                return true;
-            }
+            index++;
+            if (object.equals(item.get())) break;
         }
-        return false;
+        mListObject.remove(index);
+        return index >= 0;
     }
 
     @Override
@@ -85,10 +82,9 @@ public class FWeakObjectsHolder<T> implements ObjectsHolder<T>
         if (callback == null) return null;
 
         releaseWeakReferenceIfNeed();
-        final Iterator<WeakReference<T>> it = mListObject.iterator();
-        while (it.hasNext())
+        for (WeakReference<T> item : mListObject)
         {
-            if (callback.next(it.next().get())) break;
+            if (callback.next(item.get())) break;
         }
         return callback.getData();
     }
