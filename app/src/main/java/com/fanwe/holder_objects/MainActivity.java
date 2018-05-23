@@ -28,60 +28,39 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                doForeach(true);
-                doForeachReverse(true);
-            }
-        });
-
-        fillData();
-    }
-
-    private void fillData()
-    {
         for (int i = 0; i < 10; i++)
         {
             View view = new View(this);
             view.setTag(i);
             mHolder.add(view); //添加对象
         }
-    }
 
-    private void doForeach(final boolean log)
-    {
-        /**
-         * 正序遍历
-         */
-        mHolder.foreach(new ForeachCallback<View>()
+        findViewById(R.id.btn).setOnClickListener(new View.OnClickListener()
         {
             @Override
-            protected boolean next(View item)
+            public void onClick(View v)
             {
-                if (log) Log.i(TAG, String.valueOf(item.getTag()));
+                Object data = null;
 
-                // 返回true-停止遍历
-                return false;
+                data = mHolder.foreach(mForeachCallback); // 正序遍历
+                data = mHolder.foreachReverse(mForeachCallback); // 倒序遍历
+
+                Log.e(TAG, "foreach result:" + data);
             }
         });
     }
 
-    private void doForeachReverse(final boolean log)
+    private final ForeachCallback<View> mForeachCallback = new ForeachCallback<View>()
     {
-        /**
-         * 倒序遍历
-         */
-        mHolder.foreachReverse(new ForeachCallback<View>()
+        @Override
+        protected boolean next(View item)
         {
-            @Override
-            protected boolean next(View item)
-            {
-                if (log) Log.e(TAG, String.valueOf(item.getTag()));
-                return false;
-            }
-        });
-    }
+            Log.i(TAG, String.valueOf(item.getTag()));
+
+            setData("data"); // 设置数据，遍历结束后会返回
+
+            // 返回true-停止遍历
+            return false;
+        }
+    };
 }
