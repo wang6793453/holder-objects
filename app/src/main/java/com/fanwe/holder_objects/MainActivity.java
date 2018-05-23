@@ -9,8 +9,6 @@ import com.fanwe.lib.holder.objects.FStrongObjectsHolder;
 import com.fanwe.lib.holder.objects.ForeachCallback;
 import com.fanwe.lib.holder.objects.ObjectsHolder;
 
-import java.util.ArrayList;
-
 public class MainActivity extends AppCompatActivity
 {
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -18,7 +16,7 @@ public class MainActivity extends AppCompatActivity
     /**
      * 强引用
      */
-    private ObjectsHolder<View> mHolder = new FStrongObjectsHolder<>(new ArrayList<View>());
+    private ObjectsHolder<View> mHolder = new FStrongObjectsHolder<>(null);
 
     /**
      * 弱引用
