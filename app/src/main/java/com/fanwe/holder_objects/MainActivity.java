@@ -5,17 +5,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.fanwe.lib.holder.objects.ObjectsHolder;
 import com.fanwe.lib.holder.objects.FStrongObjectsHolder;
 import com.fanwe.lib.holder.objects.ForeachCallback;
+import com.fanwe.lib.holder.objects.ObjectsHolder;
 
 public class MainActivity extends AppCompatActivity
 {
     public static final String TAG = MainActivity.class.getSimpleName();
 
+    /**
+     * 强引用
+     */
     private ObjectsHolder<View> mHolder = new FStrongObjectsHolder<>();
-//    private ObjectsHolder<View> mHolder = new FWeakObjectsHolder<>();
 
+    /**
+     * 弱引用
+     */
+//    private ObjectsHolder<View> mHolder = new FWeakObjectsHolder<>();
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -37,12 +43,10 @@ public class MainActivity extends AppCompatActivity
 
     private void fillData()
     {
-        mHolder.clear(); //清空所有对象
         for (int i = 0; i < 10; i++)
         {
             View view = new View(this);
             view.setTag(i);
-
             mHolder.add(view); //添加对象
         }
     }
@@ -55,12 +59,12 @@ public class MainActivity extends AppCompatActivity
         mHolder.foreach(new ForeachCallback<View>()
         {
             @Override
-            protected void next(View item)
+            protected boolean next(View item)
             {
-                if (log)
-                {
-                    Log.i(TAG, String.valueOf(item.getTag()));
-                }
+                if (log) Log.i(TAG, String.valueOf(item.getTag()));
+
+                // 返回true-停止遍历
+                return false;
             }
         });
     }
@@ -73,12 +77,10 @@ public class MainActivity extends AppCompatActivity
         mHolder.foreachReverse(new ForeachCallback<View>()
         {
             @Override
-            protected void next(View item)
+            protected boolean next(View item)
             {
-                if (log)
-                {
-                    Log.e(TAG, String.valueOf(item.getTag()));
-                }
+                if (log) Log.e(TAG, String.valueOf(item.getTag()));
+                return false;
             }
         });
     }

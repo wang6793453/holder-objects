@@ -86,8 +86,7 @@ public class FWeakObjectsHolder<T> extends AbstractObjectsHolder<T>
         releaseWeakReferenceIfNeed();
         for (WeakReference<T> item : mListObject)
         {
-            callback.next(item.get());
-            if (callback.isBreakForeach())
+            if (callback.next(item.get()))
                 break;
         }
         return callback.getData();
@@ -103,8 +102,7 @@ public class FWeakObjectsHolder<T> extends AbstractObjectsHolder<T>
         final ListIterator<WeakReference<T>> it = mListObject.listIterator(mListObject.size());
         while (it.hasPrevious())
         {
-            callback.next(it.previous().get());
-            if (callback.isBreakForeach())
+            if (callback.next(it.previous().get()))
                 break;
         }
         return callback.getData();

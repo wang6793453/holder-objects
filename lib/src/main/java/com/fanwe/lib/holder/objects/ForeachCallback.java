@@ -5,26 +5,7 @@ package com.fanwe.lib.holder.objects;
  */
 public abstract class ForeachCallback<T>
 {
-    private boolean mIsBreakForeach;
     private Object mData;
-
-    /**
-     * 是否要求停止遍历
-     *
-     * @return
-     */
-    public final boolean isBreakForeach()
-    {
-        return mIsBreakForeach;
-    }
-
-    /**
-     * 停止遍历
-     */
-    protected final void breakForeach()
-    {
-        mIsBreakForeach = true;
-    }
 
     /**
      * 设置遍历的数据
@@ -50,6 +31,7 @@ public abstract class ForeachCallback<T>
      * 遍历到每一个item的时候触发此方法
      *
      * @param item
+     * @return true-停止遍历，false-继续遍历
      */
-    protected abstract void next(T item);
+    protected abstract boolean next(T item);
 }

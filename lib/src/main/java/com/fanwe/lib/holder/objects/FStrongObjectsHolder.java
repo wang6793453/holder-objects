@@ -55,8 +55,7 @@ public class FStrongObjectsHolder<T> extends AbstractObjectsHolder<T>
 
         for (T item : mListObject)
         {
-            callback.next(item);
-            if (callback.isBreakForeach())
+            if (callback.next(item))
                 break;
         }
         return callback.getData();
@@ -71,8 +70,7 @@ public class FStrongObjectsHolder<T> extends AbstractObjectsHolder<T>
         final ListIterator<T> it = mListObject.listIterator(mListObject.size());
         while (it.hasPrevious())
         {
-            callback.next(it.previous());
-            if (callback.isBreakForeach())
+            if (callback.next(it.previous()))
                 break;
         }
         return callback.getData();
