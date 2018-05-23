@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 5; i++)
         {
             View view = new View(this);
             view.setTag(i);
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
                 Object data = null;
 
                 data = mHolder.foreach(mForeachCallback); // 正序遍历
-                Log.e(TAG, "--------------------");
+                Log.e(TAG, "----------------------------------------");
                 data = mHolder.foreachReverse(mForeachCallback); // 倒序遍历
 
                 Log.e(TAG, "foreach result:" + data);
