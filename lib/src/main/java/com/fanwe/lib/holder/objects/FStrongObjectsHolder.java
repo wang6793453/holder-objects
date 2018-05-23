@@ -1,6 +1,5 @@
 package com.fanwe.lib.holder.objects;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -58,10 +57,9 @@ public class FStrongObjectsHolder<T> implements ObjectsHolder<T>
     {
         if (callback == null) return null;
 
-        final Iterator<T> it = mListObject.iterator();
-        while (it.hasNext())
+        for (T item : mListObject)
         {
-            if (callback.next(it.next())) break;
+            if (callback.next(item)) break;
         }
         return callback.getData();
     }
