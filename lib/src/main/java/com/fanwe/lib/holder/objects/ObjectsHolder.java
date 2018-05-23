@@ -5,7 +5,7 @@ package com.fanwe.lib.holder.objects;
  *
  * @param <T>
  */
-public interface FObjectsHolder<T>
+public interface ObjectsHolder<T>
 {
     /**
      * 添加对象
