@@ -4,6 +4,7 @@ import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -13,16 +14,21 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * @param <T>
  */
-public class FWeakObjectsHolder<T> extends AbstractObjectsHolder<T>
+public class FWeakObjectsHolder<T> implements ObjectsHolder<T>
 {
-    private final List<WeakReference<T>> mListObject = new CopyOnWriteArrayList<>();
+    private final List<WeakReference<T>> mListObject;
     private final ReferenceQueue<T> mQueue = new ReferenceQueue<>();
+
+    public FWeakObjectsHolder(List<WeakReference<T>> list)
+    {
+        if (list == null) list = new CopyOnWriteArrayList<>();
+        mListObject = list;
+    }
 
     @Override
     public boolean add(T object)
     {
-        if (object == null || contains(object))
-            return false;
+        if (object == null || contains(object)) return false;
 
         mListObject.add(new WeakReference<>(object, mQueue));
         return true;
@@ -31,15 +37,15 @@ public class FWeakObjectsHolder<T> extends AbstractObjectsHolder<T>
     @Override
     public boolean remove(Object object)
     {
-        if (object == null)
-            return false;
+        if (object == null) return false;
 
         releaseWeakReferenceIfNeed();
-        for (WeakReference<T> item : mListObject)
+        final Iterator<WeakReference<T>> it = mListObject.iterator();
+        while (it.hasNext())
         {
-            if (object.equals(item.get()))
+            if (object.equals(it.next().get()))
             {
-                mListObject.remove(item);
+                it.remove();
                 return true;
             }
         }
@@ -49,16 +55,12 @@ public class FWeakObjectsHolder<T> extends AbstractObjectsHolder<T>
     @Override
     public boolean contains(T object)
     {
-        if (object == null)
-            return false;
+        if (object == null) return false;
 
         releaseWeakReferenceIfNeed();
         for (WeakReference<T> item : mListObject)
         {
-            if (object.equals(item.get()))
-            {
-                return true;
-            }
+            if (object.equals(item.get())) return true;
         }
         return false;
     }
@@ -80,14 +82,19 @@ public class FWeakObjectsHolder<T> extends AbstractObjectsHolder<T>
     @Override
     public Object foreach(ForeachCallback<T> callback)
     {
-        if (callback == null)
-            return null;
+        if (callback == null) return null;
 
         releaseWeakReferenceIfNeed();
-        for (WeakReference<T> item : mListObject)
+        final Iterator<WeakReference<T>> it = mListObject.iterator();
+        while (it.hasNext())
         {
-            if (callback.next(item.get()))
-                break;
+            final boolean needBreak = callback.next(it.next().get());
+            if (callback.mRemove)
+            {
+                it.remove();
+                callback.mRemove = false;
+            }
+            if (needBreak) break;
         }
         return callback.getData();
     }
@@ -102,8 +109,13 @@ public class FWeakObjectsHolder<T> extends AbstractObjectsHolder<T>
         final ListIterator<WeakReference<T>> it = mListObject.listIterator(mListObject.size());
         while (it.hasPrevious())
         {
-            if (callback.next(it.previous().get()))
-                break;
+            final boolean needBreak = callback.next(it.previous().get());
+            if (callback.mRemove)
+            {
+                it.remove();
+                callback.mRemove = false;
+            }
+            if (needBreak) break;
         }
         return callback.getData();
     }
