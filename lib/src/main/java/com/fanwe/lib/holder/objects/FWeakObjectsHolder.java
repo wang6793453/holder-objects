@@ -88,13 +88,7 @@ public class FWeakObjectsHolder<T> implements ObjectsHolder<T>
         final Iterator<WeakReference<T>> it = mListObject.iterator();
         while (it.hasNext())
         {
-            final boolean needBreak = callback.next(it.next().get());
-            if (callback.mRemove)
-            {
-                it.remove();
-                callback.mRemove = false;
-            }
-            if (needBreak) break;
+            if (callback.next(it.next().get())) break;
         }
         return callback.getData();
     }
@@ -108,13 +102,7 @@ public class FWeakObjectsHolder<T> implements ObjectsHolder<T>
         final ListIterator<WeakReference<T>> it = mListObject.listIterator(mListObject.size());
         while (it.hasPrevious())
         {
-            final boolean needBreak = callback.next(it.previous().get());
-            if (callback.mRemove)
-            {
-                it.remove();
-                callback.mRemove = false;
-            }
-            if (needBreak) break;
+            if (callback.next(it.previous().get())) break;
         }
         return callback.getData();
     }

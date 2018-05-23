@@ -6,15 +6,6 @@ package com.fanwe.lib.holder.objects;
 public abstract class ForeachCallback<T>
 {
     private Object mData;
-    boolean mRemove;
-
-    /**
-     * 移除当前遍历到的item
-     */
-    protected final void remove()
-    {
-        mRemove = true;
-    }
 
     /**
      * 设置遍历的数据

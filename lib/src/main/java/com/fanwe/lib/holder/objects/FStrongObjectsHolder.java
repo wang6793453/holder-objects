@@ -61,13 +61,7 @@ public class FStrongObjectsHolder<T> implements ObjectsHolder<T>
         final Iterator<T> it = mListObject.iterator();
         while (it.hasNext())
         {
-            final boolean needBreak = callback.next(it.next());
-            if (callback.mRemove)
-            {
-                it.remove();
-                callback.mRemove = false;
-            }
-            if (needBreak) break;
+            if (callback.next(it.next())) break;
         }
         return callback.getData();
     }
@@ -75,19 +69,12 @@ public class FStrongObjectsHolder<T> implements ObjectsHolder<T>
     @Override
     public Object foreachReverse(ForeachCallback<T> callback)
     {
-        if (callback == null)
-            return null;
+        if (callback == null) return null;
 
         final ListIterator<T> it = mListObject.listIterator(mListObject.size());
         while (it.hasPrevious())
         {
-            final boolean needBreak = callback.next(it.previous());
-            if (callback.mRemove)
-            {
-                it.remove();
-                callback.mRemove = false;
-            }
-            if (needBreak) break;
+            if (callback.next(it.previous())) break;
         }
         return callback.getData();
     }
