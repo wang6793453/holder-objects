@@ -30,14 +30,17 @@ public class FStrongObjectsHolder<T> implements ObjectsHolder<T>
 
     public FStrongObjectsHolder(List<T> list)
     {
-        if (list == null) list = new CopyOnWriteArrayList<>();
+        if (list == null)
+            list = new CopyOnWriteArrayList<>();
+
         mListObject = list;
     }
 
     @Override
     public boolean add(T object)
     {
-        if (object == null || contains(object)) return false;
+        if (object == null || contains(object))
+            return false;
 
         mListObject.add(object);
         return true;
@@ -70,11 +73,13 @@ public class FStrongObjectsHolder<T> implements ObjectsHolder<T>
     @Override
     public Object foreach(ForeachCallback<T> callback)
     {
-        if (callback == null) return null;
+        if (callback == null)
+            return null;
 
         for (T item : mListObject)
         {
-            if (callback.next(item)) break;
+            if (callback.next(item))
+                break;
         }
         return callback.getData();
     }
@@ -82,12 +87,14 @@ public class FStrongObjectsHolder<T> implements ObjectsHolder<T>
     @Override
     public Object foreachReverse(ForeachCallback<T> callback)
     {
-        if (callback == null) return null;
+        if (callback == null)
+            return null;
 
         final ListIterator<T> it = mListObject.listIterator(mListObject.size());
         while (it.hasPrevious())
         {
-            if (callback.next(it.previous())) break;
+            if (callback.next(it.previous()))
+                break;
         }
         return callback.getData();
     }
