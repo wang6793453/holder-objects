@@ -6,7 +6,7 @@
 * FWeakObjectsHolder<T> 若引用多对象持有者
 
 # Gradle
-`implementation 'com.fanwe.android:holder-objects:1.0.4'`
+`implementation 'com.fanwe.android:holder-objects:1.0.5'`
 
 # 简单demo
 ```java

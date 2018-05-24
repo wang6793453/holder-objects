@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 20180523
-        versionName "1.0.4"
+        versionCode 20180524
+        versionName "1.0.5"
     }
 
     buildTypes {
@@ -27,7 +27,7 @@ publish {
     groupId = 'com.fanwe.android'
 
     artifactId = 'holder-objects'
-    publishVersion = '1.0.4'
+    publishVersion = '1.0.5'
     desc = 'android objects holder library'
     website = 'https://github.com/zj565061763/holder-objects'
 }
