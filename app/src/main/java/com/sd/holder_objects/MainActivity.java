@@ -1,13 +1,13 @@
-package com.fanwe.holder_objects;
+package com.sd.holder_objects;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.fanwe.lib.holder.objects.FStrongObjectsHolder;
-import com.fanwe.lib.holder.objects.ForeachCallback;
-import com.fanwe.lib.holder.objects.ObjectsHolder;
+import com.sd.lib.holder.objects.FStrongObjectsHolder;
+import com.sd.lib.holder.objects.ForeachCallback;
+import com.sd.lib.holder.objects.ObjectsHolder;
 
 public class MainActivity extends AppCompatActivity
 {

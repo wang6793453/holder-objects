@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.fanwe.holder_objects">
+    package="com.sd.holder_objects">
 
     <application
         android:allowBackup="true"
