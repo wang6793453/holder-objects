@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 
 import com.sd.lib.holder.objects.FStrongObjectsHolder;
-import com.sd.lib.holder.objects.ForeachCallback;
 import com.sd.lib.holder.objects.ObjectsHolder;
 
 public class MainActivity extends AppCompatActivity
@@ -32,7 +31,8 @@ public class MainActivity extends AppCompatActivity
         {
             View view = new View(this);
             view.setTag(i);
-            mHolder.add(view); //添加对象
+            //添加对象
+            mHolder.add(view);
         }
 
         findViewById(R.id.btn).setOnClickListener(new View.OnClickListener()
@@ -40,25 +40,26 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Object data = null;
-
-                data = mHolder.foreach(mForeachCallback); // 正序遍历
+                // 正序遍历
+                Object data = mHolder.foreach(mForeachCallback);
                 Log.e(TAG, "----------------------------------------");
-                data = mHolder.foreachReverse(mForeachCallback); // 倒序遍历
 
+                // 倒序遍历
+                data = mHolder.foreachReverse(mForeachCallback);
                 Log.e(TAG, "foreach result:" + data);
             }
         });
     }
 
-    private final ForeachCallback<View> mForeachCallback = new ForeachCallback<View>()
+    private final ObjectsHolder.ForeachCallback<View> mForeachCallback = new ObjectsHolder.ForeachCallback<View>()
     {
         @Override
         protected boolean next(View item)
         {
             Log.i(TAG, String.valueOf(item.getTag()));
 
-            setData("data"); // 设置数据，遍历结束后会返回
+            // 设置数据，遍历结束后会返回
+            setData("data");
 
             // 返回true-停止遍历
             return false;
